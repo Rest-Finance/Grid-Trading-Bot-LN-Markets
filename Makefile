@@ -15,9 +15,3 @@ prod/start:
 prod/install:
 	pip install --upgrade pip
 	pip install -r requirements.txt
-
-prod/logs:
-	docker exec -ti core_api cat logs/bot.log
-
-prod/transfer:
-	docker exec -ti core_api python should_transfer.py

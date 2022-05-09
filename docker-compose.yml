@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  terra:
+    image: python:3.9
+    container_name: terra-lnmarkets
+    volumes: 
+      -  .:/app
+    working_dir: /app
+    network_mode: host
+    command: /bin/sh -c "make prod/install && make prod/start"

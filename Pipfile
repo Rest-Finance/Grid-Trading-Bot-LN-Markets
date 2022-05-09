@@ -4,12 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
 websocket-client = "*"
 rel = "*"
 python-dotenv = "*"
 black = "*"
-python-socketio = "*"
+ln-markets = "*"
 
 [dev-packages]
 isort = "*"

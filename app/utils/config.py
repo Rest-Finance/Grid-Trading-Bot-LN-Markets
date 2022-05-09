@@ -7,32 +7,18 @@ load_dotenv()
 
 
 class ENV:
-    core_api_url = os.environ.get('CORE_API_URL')
-
-
-api_url = f"{ENV.core_api_url}/api/exchanges/lnmarkets"
-
-
-class URL:
-    balance = f"{api_url}/balance"
-    positions = f"{api_url}/positions"
-    order = f"{api_url}/order"
-
-
-class METHODS:
-    get = "GET"
-    post = "POST"
+    WS_url = os.environ.get('LNM_WS_URL')
+    lnm_key = os.environ.get('LNM_API_KEY')
+    lnm_secret =  os.environ.get('LNM_API_SECRET')
+    lnm_passphrase =  os.environ.get('LNM_PASSPHRASE')
 
 
 class CONSTANTS:
     quantity = 1
     quantity_balance_ratio = 0.0060
-    limit_rate = 0.005
-    n_max_rebuy = 8
-    short = "SHORT"
-    long = "LONG"
-    buy = "BUY"
-    sell = "SELL"
+    limit_rate = 0.01
+    buy = "b"
+    sell = "s"
     leverage = 10
 
 

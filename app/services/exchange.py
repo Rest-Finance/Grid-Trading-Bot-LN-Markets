@@ -1,43 +1,23 @@
-import logging
+import json
 
-import requests
-from utils.config import CONSTANTS, METHODS, URL
+from lnmarkets import rest
+from utils.config import CONSTANTS, ENV
 
 
 class Exchange:
-    def __handle_request(self, url: str, method: str, body=None, params=None):
-        r = None
-        if method == METHODS.get:
-            r = requests.get(url, params=params)
-
-        elif method == METHODS.post:
-            r = requests.post(url, data=body)
-
-        return r.json()
+    lnm = rest.LNMarketsRest(
+        key=ENV.lnm_key, secret=ENV.lnm_secret, passphrase=ENV.lnm_passphrase)
 
     def account_balance(self):
-        return self.__handle_request(url=URL.balance, method=METHODS.get)['balance']
+        user = json.loads(self.lnm.get_user())
 
-    def order(self, side: str, quantity, tp: float):
-        params = {
-            "type": "m",
-            "side": side,
-            "margin": quantity,
-            "leverage": CONSTANTS.leverage,
-            "takeprofit": tp
-        }
-        self.new_order(**params)
+        return user['balance'] + user['total_running_margin']
 
-    def new_order(self, **kwargs):
-        logging.info(kwargs)
-        self.__handle_request(
-            url=URL.order,
-            method=METHODS.post,
-            body=kwargs
-        )
-
-    def positions(self):
-        return self.__handle_request(
-            url=URL.positions,
-            method=METHODS.get
-        )
+    def order(self, side: str, quantity: int, tp: float):
+        self.lnm.futures_new_position({
+            'type': 'm',
+            'side':  side,
+            'margin': quantity,
+            'leverage': CONSTANTS.leverage,
+            'takeprofit': tp
+        })

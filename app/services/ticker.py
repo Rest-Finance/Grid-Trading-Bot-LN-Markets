@@ -1,32 +1,21 @@
-import logging
-import time
+import json
 
-import socketio
 from utils.config import ENV
-
-sio = socketio.Client()
+from websocket import create_connection
 
 
 class Ticker:
     last_price = None
-    _step_price = None
-    _connected = False
+    step_price = None
 
     def start(self) -> None:
-        while not self._connected:
-            try:
-                sio.connect(ENV.core_api_url)
-                self._connected = True
-                logging.info('[ OK ] Websocket connection established')
-                sio.wait()
-            except:
-                logging.error('[ ! ] Websocket connection failed')
-                time.sleep(10)
+        ws = create_connection(ENV.WS_url)
+        ws.send(
+            '{"method":"subscribe", "jsonrpc": "2.0", "params": ["futures/market/index"]}')
 
+        while True:
+            data = json.loads(ws.recv())
+            if 'method' in data and data['method'] == 'futures/market/index':
+                self.last_price = data['params']['index']
 
 ticker = Ticker()
-
-
-@sio.event
-def lnmarketsticker(data):
-    ticker.last_price = data

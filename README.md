@@ -14,12 +14,10 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -36,6 +34,7 @@
 * [Docker](https://www.docker.com/)
 * [Docker-compose](https://docs.docker.com/compose/)
 * [LN Markets Python API](https://github.com/ln-markets/api-python)
+* [Websocket](https://github.com/websocket-client/websocket-client)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
